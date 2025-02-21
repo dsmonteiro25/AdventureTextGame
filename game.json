@@ -1,0 +1,222 @@
+{
+    "start_locationId": 1,
+    "locations": [
+        {
+            "id": 1,
+            "name": "Quarto do Diddy",
+            "description": "Nesta cena o jogador só tem a opção de buscar algumaferramenta para abrir a porta escapar do quarto.",
+            "exits": [
+                {
+                    "direction": "corredor",
+                    "targetLocationId": 2,
+                    "description": "Um corredor escuro que leva a outras partes da casa.",
+                    "inactive": false
+                }
+            ],
+            "items": [],
+            "npcs": [],
+            "puzzles": [],
+            "enemies": []
+        },
+        {
+            "id": 2,
+            "name": "Corredor Principal",
+            "description": "Nesta cena há 3 quartos e uma escadaria no corredor principal,o jogador tem a opção descolher  qual deles deseja entrar.",
+            "exits": [
+                {
+                    "direction": "quarto 1",
+                    "targetLocationId": 3,
+                    "description": "Uma porta que leva a um quarto que parece guardar algo valioso.",
+                    "inactive": false
+                },
+                {
+                    "direction": "quarto 2",
+                    "targetLocationId": 4,
+                    "description": "Uma porta que leva a um quarto desconhecido.",
+                    "inactive": false
+                },
+                {
+                    "direction": "quarto 3",
+                    "targetLocationId": 5,
+                    "description": "Uma porta que leva a um quarto desconhecido.",
+                    "inactive": false
+                },
+                {
+                    "direction": "salão de festas",
+                    "targetLocationId": 6,
+                    "description": "Uma porta que leva ao salão de festas, onde a ação principal parece estar ocorrendo.",
+                    "inactive": false
+                }
+            ],
+            "items": [],
+            "npcs": [],
+            "puzzles": [],
+            "enemies": []
+        },
+        {
+            "id": 3,
+            "name": "Quarto 1",
+            "description": "Um quarto que parece guardar algo valioso. Talvez seja aqui que você encontre a chave para escapar.",
+            "exits": [
+                {
+                    "direction": "corredor",
+                    "targetLocationId": 2,
+                    "description": "Voltar ao corredor.",
+                    "inactive": false
+                }
+            ],
+            "items": [],
+            "npcs": [],
+            "puzzles": [],
+            "enemies": []
+        },
+        {
+        "id": 4,
+            "name": "Quarto 2",
+            "description": "Um quarto que parece estar vázio.",
+            "exits": [
+                {
+                    "direction": "corredor",
+                    "targetLocationId": 2,
+                    "description": "Voltar ao corredor.",
+                    "inactive": false
+                }
+            ],
+            "items": [],
+            "npcs": [],
+            "puzzles": [],
+            "enemies": []
+        },
+        {
+        "id": 5,
+            "name": "Quarto 3",
+            "description": "Um quarto comum, mas parece haver algo brilhando ao fundo.",
+            "exits": [
+                {
+                    "direction": "corredor",
+                    "targetLocationId": 2,
+                    "description": "Voltar ao corredor.",
+                    "inactive": false
+                }
+            ],
+            "items": [],
+            "npcs": [],
+            "puzzles": [],
+            "enemies": []
+        },
+        {
+            "id": 6,
+            "name": "Salão de Festas",
+            "description": "O salão de festas está cheio de pessoas e música alta. Parece que algo importante está acontecendo aqui.",
+            "exits": [
+                {
+                    "direction": "corredor",
+                    "targetLocationId": 2,
+                    "description": "Voltar ao corredor.",
+                    "inactive": false
+                },
+                {
+                    "direction": "entrada principal",
+                    "targetLocationId": 7,
+                    "description": "A entrada principal da casa, onde você pode tentar escapar.",
+                    "inactive": false
+                }
+            ],
+            "items": [],
+            "npcs": [],
+            "puzzles": [],
+            "enemies": []
+        },
+        {
+            "id": 7,
+            "name": "Entrada Principal",
+            "description": "A entrada principal da casa. Aqui você pode tentar escapar, mas algo parece que algumas pessoas hortis estão bloqueando o caminho.",
+            "exits": [
+                {
+                    "direction": "salão de festas",
+                    "targetLocationId": 6,
+                    "description": "Voltar ao salão de festas.",
+                    "inactive": false
+                }
+            ],
+            "items": [],
+            "npcs": [],
+            "puzzles": [],
+            "enemies": []
+        },
+        {
+            "id": 8,
+            "name": "Cozinha",
+            "description": "A cozinha está bagunçada, com vários utensílios espalhados. Talvez você encontre algo útil aqui.",
+            "exits": [
+                {
+                    "direction": "salão de festas",
+                    "targetLocationId": 6,
+                    "description": "Voltar ao salão de festas.",
+                    "inactive": false
+                }
+            ],
+            "items": [],
+            "npcs": [],
+            "puzzles": [],
+            "enemies": []
+        },
+        {
+            "id": 9,
+            "name": "Banheiro",
+            "description": "O banheiro está vazio, mas há algo estranho no ar. Talvez hajá perigo a frente.",
+            "exits": [
+                {
+                    "direction": "cozinha",
+                    "targetLocationId": 8,
+                    "description": "Voltar a cozinha.",
+                    "inactive": false
+                }
+            ],
+            "items": [],
+            "npcs": [],
+            "puzzles": [],
+            "enemies": []
+        },
+        {
+            "id": 10,
+            "name": "Casa da Piscina",
+            "description": "Uma pequena casa perto da piscina que o anfitrião usa para dar festas.",
+            "exits": [
+                {
+                    "direction": "cozinha",
+                    "targetLocationId": 8,
+                    "description": "Voltar a cozinha.",
+                    "inactive": false
+                }
+            ],
+            "items": [],
+            "npcs": [],
+            "puzzles": [],
+            "enemies": []
+        },
+        {
+            "id": 11,
+            "name": "Jardins",
+            "description": "Um grande jardin com uma otima vista, um belo lugar, mas esconde um perigo real.",
+            "exits": [
+                {
+                    "direction": "cozinha",
+                    "targetLocationId": 8,
+                    "description": "Voltar a cozinha.",
+                    "inactive": false
+                },
+                {
+                    "direction": "casa da piscina",
+                    "targetLocationId": 12,
+                    "description": "Voltar a casa da piscina.",
+                    "inactive": false
+                }
+            ],
+            "items": [],
+            "npcs": [],
+            "puzzles": [],
+            "enemies": []
+        }
+    ]
+}
