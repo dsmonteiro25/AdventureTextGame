@@ -1,222 +1,151 @@
 {
-    "start_locationId": 1,
+    "title": "DiddyPartyScape",
+    "description": "Escape da Freak Off cheia de perigos e mistérios para fica com sua dignidade intacta.",
+    "author": "Daniel Monteiro e Evanildo Felipe",
+    "startLocationId": "diddy_room",
+    "max_turns_normal": 50,
+    "attack": 10,
+    "defense": 8,
+    "life": 22,
     "locations": [
-        {
-            "id": 1,
-            "name": "Quarto do Diddy",
-            "description": "Nesta cena o jogador só tem a opção de buscar algumaferramenta para abrir a porta escapar do quarto.",
-            "exits": [
-                {
-                    "direction": "corredor",
-                    "targetLocationId": 2,
-                    "description": "Um corredor escuro que leva a outras partes da casa.",
-                    "inactive": false
-                }
+      {
+        "id": "diddy_room",
+        "name": "Quarto de Diddy",
+        "description": "Você está trancado no quarto e precisa encontrar uma ferramenta para sair.",
+        "items": [{ "id": "chave", "name": "ChaveOrdinaria", "description": "Abre a porta do quarto.", "can_take": true }],
+        "exits": [{ "direction": "corredor", "targetLocationId": "corredor", "inactive": true }],
+        "npcs": [{ "id": "fantasma", "name": "Fantasma", "description": "Um espírito perdido que murmura enigmas." }],
+        "puzzles": [{
+        "id": "cadeado",
+        "description": "A porta está trancada com um cadeado. Talvez uma chave possa ajudar.",
+        "solution": { "requiredItems": ["chave"], "actions": "usar chave" },
+        "result": { "active": ["corredor"], "lose_item": ["chave"] }
+      }]
+      },
+      {
+        "id": "corredor",
+        "name": "Corredor",
+        "description": "Há três quartos e uma escada aqui. Para onde deseja ir?",
+        "exits": [
+          { "direction": "quarto 1", "targetLocationId": "quarto_1" },
+          { "direction": "quarto 2", "targetLocationId": "quarto_2" },
+          { "direction": "quarto 3", "targetLocationId": "quarto_3" },
+          { "direction": "escada", "targetLocationId": "salao_festas" }
+        ],
+        "npcs": [{ "id": "mordomo", "name": "Mordomo Misterioso", "description": "Parece saber mais do que aparenta..." }]
+      },
+      {
+        "id": "quarto_1",
+        "name": "Quarto 1",
+        "description": "Um quarto escuro, há um item aqui.",
+        "exits":[{"direction": "Corredor", "targetLocationId": "corredor"}],
+        "items": [{ "id": "lanterna", "name": "Lanterna", "description": "Ilumina lugares escuros.", "can_take": true }],
+        "enemies": []
+      },
+      {
+        "id": "quarto_2",
+        "name": "Quarto 2",
+        "description": "Um quarto escuro, há um item aqui.",
+        "exits":[{"direction": "Corredor", "targetLocationId": "corredor"}],
+        "items": [{ "id": "Chave Inglesa", "name": "Chave", "description": "Pode ser usada como arma.", "can_take": true }],
+        "enemies": []
+      },
+      {
+        "id": "quarto_3",
+        "name": "Quarto 3",
+        "exits":[{"direction": "Corredor", "targetLocationId": "corredor"}],
+        "description": "Esse quarto parece especial, mas há um homem bem grande e que parece zangado à frente.",
+        "items": [{ "id": "Chave dos fundos", "name": "Chave", "description": "Abre o portão dos fundos.", "can_take": false }],
+        "enemies": [{ "attack": 10, "defense": 14, "result": { "lose_life": 5 } }]
+      },
+      {
+        "id": "banheiro",
+        "name": "Banheiro",
+        "description": "Você fica preso com um inimigo! Precisa derrotá-lo para sair.",
+        "enemies": [{ "attack": 5, "defense": 4, "result": { "lose_life": 5 } }],
+        "exits": [{ "direction": "sair", "targetLocationId": "corredor", "inactive": false }]
+      },
+      {
+        "id": "salao_festas",
+        "name": "Salão de Festas",
+        "description": "O salão está cheio de NPCs e seguranças inimigos.",
+        "npcs": [
+          { "id": "dj", "name": "DJ", "description": "Talvez ele possa te ajudar..." },
+          { "id": "festeiro", "name": "Festeiro Misterioso", "description": "Alguém que parece saber segredos do lugar." }
+        ],
+        "enemies": [],
+        "exits": [
+          { "direction": "jardins", "targetLocationId": "jardins" },
+          { "direction": "cozinha", "targetLocationId": "cozinha" },
+          { "direction": "entrada", "targetLocationId": "entrada_principal" },
+          { "direction": "Corredor", "targetLocationId": "corredor"}
+        ]
+      },
+      {
+        "id": "cozinha",
+        "name": "Cozinha",
+        "description": "Você pode coletar consumíveis aqui.",
+        "exits":[ 
+            {"direction": "Salão de Festas", "targetLocationId": "salao_festas", "inactive": true},
+            {"direction": "jardins", "targetLocationId": "jardins", "inactive": true}
             ],
-            "items": [],
-            "npcs": [],
-            "puzzles": [],
-            "enemies": []
-        },
-        {
-            "id": 2,
-            "name": "Corredor Principal",
-            "description": "Nesta cena há 3 quartos e uma escadaria no corredor principal,o jogador tem a opção descolher  qual deles deseja entrar.",
-            "exits": [
-                {
-                    "direction": "quarto 1",
-                    "targetLocationId": 3,
-                    "description": "Uma porta que leva a um quarto que parece guardar algo valioso.",
-                    "inactive": false
-                },
-                {
-                    "direction": "quarto 2",
-                    "targetLocationId": 4,
-                    "description": "Uma porta que leva a um quarto desconhecido.",
-                    "inactive": false
-                },
-                {
-                    "direction": "quarto 3",
-                    "targetLocationId": 5,
-                    "description": "Uma porta que leva a um quarto desconhecido.",
-                    "inactive": false
-                },
-                {
-                    "direction": "salão de festas",
-                    "targetLocationId": 6,
-                    "description": "Uma porta que leva ao salão de festas, onde a ação principal parece estar ocorrendo.",
-                    "inactive": false
-                }
-            ],
-            "items": [],
-            "npcs": [],
-            "puzzles": [],
-            "enemies": []
-        },
-        {
-            "id": 3,
-            "name": "Quarto 1",
-            "description": "Um quarto que parece guardar algo valioso. Talvez seja aqui que você encontre a chave para escapar.",
-            "exits": [
-                {
-                    "direction": "corredor",
-                    "targetLocationId": 2,
-                    "description": "Voltar ao corredor.",
-                    "inactive": false
-                }
-            ],
-            "items": [],
-            "npcs": [],
-            "puzzles": [],
-            "enemies": []
-        },
-        {
-        "id": 4,
-            "name": "Quarto 2",
-            "description": "Um quarto que parece estar vázio.",
-            "exits": [
-                {
-                    "direction": "corredor",
-                    "targetLocationId": 2,
-                    "description": "Voltar ao corredor.",
-                    "inactive": false
-                }
-            ],
-            "items": [],
-            "npcs": [],
-            "puzzles": [],
-            "enemies": []
-        },
-        {
-        "id": 5,
-            "name": "Quarto 3",
-            "description": "Um quarto comum, mas parece haver algo brilhando ao fundo.",
-            "exits": [
-                {
-                    "direction": "corredor",
-                    "targetLocationId": 2,
-                    "description": "Voltar ao corredor.",
-                    "inactive": false
-                }
-            ],
-            "items": [],
-            "npcs": [],
-            "puzzles": [],
-            "enemies": []
-        },
-        {
-            "id": 6,
-            "name": "Salão de Festas",
-            "description": "O salão de festas está cheio de pessoas e música alta. Parece que algo importante está acontecendo aqui.",
-            "exits": [
-                {
-                    "direction": "corredor",
-                    "targetLocationId": 2,
-                    "description": "Voltar ao corredor.",
-                    "inactive": false
-                },
-                {
-                    "direction": "entrada principal",
-                    "targetLocationId": 7,
-                    "description": "A entrada principal da casa, onde você pode tentar escapar.",
-                    "inactive": false
-                }
-            ],
-            "items": [],
-            "npcs": [],
-            "puzzles": [],
-            "enemies": []
-        },
-        {
-            "id": 7,
-            "name": "Entrada Principal",
-            "description": "A entrada principal da casa. Aqui você pode tentar escapar, mas algo parece que algumas pessoas hortis estão bloqueando o caminho.",
-            "exits": [
-                {
-                    "direction": "salão de festas",
-                    "targetLocationId": 6,
-                    "description": "Voltar ao salão de festas.",
-                    "inactive": false
-                }
-            ],
-            "items": [],
-            "npcs": [],
-            "puzzles": [],
-            "enemies": []
-        },
-        {
-            "id": 8,
-            "name": "Cozinha",
-            "description": "A cozinha está bagunçada, com vários utensílios espalhados. Talvez você encontre algo útil aqui.",
-            "exits": [
-                {
-                    "direction": "salão de festas",
-                    "targetLocationId": 6,
-                    "description": "Voltar ao salão de festas.",
-                    "inactive": false
-                }
-            ],
-            "items": [],
-            "npcs": [],
-            "puzzles": [],
-            "enemies": []
-        },
-        {
-            "id": 9,
-            "name": "Banheiro",
-            "description": "O banheiro está vazio, mas há algo estranho no ar. Talvez hajá perigo a frente.",
-            "exits": [
-                {
-                    "direction": "cozinha",
-                    "targetLocationId": 8,
-                    "description": "Voltar a cozinha.",
-                    "inactive": false
-                }
-            ],
-            "items": [],
-            "npcs": [],
-            "puzzles": [],
-            "enemies": []
-        },
-        {
-            "id": 10,
-            "name": "Casa da Piscina",
-            "description": "Uma pequena casa perto da piscina que o anfitrião usa para dar festas.",
-            "exits": [
-                {
-                    "direction": "cozinha",
-                    "targetLocationId": 8,
-                    "description": "Voltar a cozinha.",
-                    "inactive": false
-                }
-            ],
-            "items": [],
-            "npcs": [],
-            "puzzles": [],
-            "enemies": []
-        },
-        {
-            "id": 11,
-            "name": "Jardins",
-            "description": "Um grande jardin com uma otima vista, um belo lugar, mas esconde um perigo real.",
-            "exits": [
-                {
-                    "direction": "cozinha",
-                    "targetLocationId": 8,
-                    "description": "Voltar a cozinha.",
-                    "inactive": false
-                },
-                {
-                    "direction": "casa da piscina",
-                    "targetLocationId": 12,
-                    "description": "Voltar a casa da piscina.",
-                    "inactive": false
-                }
-            ],
-            "items": [],
-            "npcs": [],
-            "puzzles": [],
-            "enemies": []
-        }
+        "items": [{ "id": "pocao", "name": "Poção", "description": "Recupera vida.", "can_take": true }],
+        "enemies": []
+      },
+      {
+        "id": "entrada_principal",
+        "name": "Entrada Principal",
+        "description": "Três guardas estão protegendo a saída, um deles é o chefe da segurança!",
+        "enemies": [{ "attack": 12, "defense": 10, "result": { "lose_life": 10 } }],
+        "exits": [
+            { "direction": "sair", "targetLocationId": "vitoria", "inactive": false },
+            {"direction": "Salão de Festas", "targetLocationId": "salao_festas", "inactive": true}
     ]
-}
+      },
+      {
+      "id": "jardins",
+        "name": "Jardins",
+        "description": "Um lugar muito bonito, mas que parece esconder alguns perigos",
+        "enemies": [{ "attack": 6, "defense": 2, "result": { "lose_life": 7 } }],
+        "exits": [
+            { "direction": "Cozinha", "targetLocationId": "cozinha", "inactive": true },
+            {"direction": "Salão de Festas", "targetLocationId": "salao_festas", "inactive": true}]
+      },
+      {
+        "id": "saida_dos_fundos",
+          "name": "Saída dos fundos",
+          "description": "Um entrada para aqueles que desejam ser mais discretos",
+          "enemies": [{ "attack": 6, "defense": 2, "result": { "lose_life": 7 } }],
+          "exits": [
+              { "direction": "jardins", "targetLocationId": "jardins", "inactive": true }],
+          "puzzles": [{
+          "id": "cadeado",
+          "description": "A porta está trancada com um cadeado. Talvez uma chave possa ajudar.",
+          "solution": { "requiredItems": ["chave"], "actions": "usar chave" },
+          "result": { "active": ["corredor"], "lose_item": ["chave"] }
+      }]
+            },
+        {
+            "id": "casa_da_piscina",
+            "name": "Casa da Piscina",
+            "description": "Um lugar muito bonito, mas que parece esconder alguns perigos",
+            "enemies": [],
+            "exits": [
+              { "direction": "cozinha", "targetLocationId": "cozinha", "inactive": true },
+              { "direction": "jardins", "targetLocationId": "jardins", "inactive": true }
+            ],
+            "puzzles": [{
+              "id": "esvaziar_piscina",
+              "description": "Há um dreno no fundo da piscina. Talvez algo possa ativá-lo.",
+              "solution": { "requiredItems": ["alavanca"], "actions": "puxar alavanca" },
+              "result": { "active": [], "lose_item": ["alavanca"], "new_items": [{ "id": "chave_reserva", "name": "Chave Reserva", "description": "Uma chave extra que pode ser útil.", "can_take": true }] }
+            }]
+          },
+      {
+        "id": "vitoria",
+        "name": "Vitória!",
+        "description": "Você conseguiu escapar da mansão do Diddy"
+      }
+    ]
+  }
+  

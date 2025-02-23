@@ -3,13 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adventure Text Game</title>
+    <title>DiddyPartyScape</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="game">
-        <div id="output"></div>
-        <input type="text" id="input" placeholder="Digite seu comando...">
+    <audio id="background-music" autoplay loop muted>
+        <source src="Puff Daddy - I_ll Be Missing You (Lyrics) feat. Faith Evans_ 112(MP3_160K).mp3" type="audio/mp3">
+        Seu navegador não suporta a tag de áudio.
+    </audio>
+
+    <button id="play-music" onclick="ativarSom()">🔊 Ativar Som</button>
+
+    <script>
+        function ativarSom() {
+            let music = document.getElementById("background-music");
+            music.muted = false;
+            music.play();
+        }
+    </script>
+    
+    <div id="commands-list">
+        <h3>Comandos Aceitos</h3>
+        <ul>
+            <li><strong>mover [direção]</strong>: Move para uma nova localização.</li>
+            <li><strong>pegar [item]</strong>: Adiciona um item ao inventário.</li>
+            <li><strong>usar [item]</strong>: Usa um item do inventário.</li>
+            <li><strong>inventario</strong>: Exibe os itens no inventário.</li>
+            <li><strong>falar [npc]</strong>: Interage com um NPC.</li>
+            <li><strong>resolver [quebra-cabeça]</strong>: Resolve um quebra-cabeça.</li>
+        </ul>
+    </div>
+    <div id="game-container">
+        <video id="background-video" autoplay loop muted>
+            <source src="P Diddy edit __ Serial.ae(720P_60FPS).mp4" type="video/mp4">
+            Seu navegador não suporta vídeos HTML5.
+        </video>
+        <h1 id="game-title">Carregando Jogo...</h1>
+        <div id="game-description"></div>
+        <div id="game-location"></div>
+        <div id="game-actions">
+            <input type="text" id="command-input" placeholder="Digite seu comando...">
+            <button id="submit-command">Enviar</button>
+        </div>
+        <div id="game-log"></div>
+        <div id="turn-counter">Turno: 0</div>
     </div>
     <script src="app.js"></script>
 </body>
