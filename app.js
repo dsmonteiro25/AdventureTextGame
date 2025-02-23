@@ -6,12 +6,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const commandInput = document.getElementById('command-input');
     const submitCommand = document.getElementById('submit-command');
     const gameLog = document.getElementById('game-log');
-    const turnCounter = document.getElementById('turn-counter'); // Referência ao contador de turnos
+    const turnCounter = document.getElementById('turn-counter');
 
     let gameData;
     let currentLocation;
+    let previousLocation = null; // Armazena a localização anterior
     let inventory = [];
-    let turns = 0; // Variável para contar os turnos
+    let turns = 0;
 
     // Carregar o arquivo JSON
     fetch('game.json')
@@ -27,15 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
         gameDescription.textContent = gameData.description;
         currentLocation = gameData.locations.find(loc => loc.id === gameData.startLocationId);
         updateLocation();
-        updateTurnCounter(); // Atualiza o contador de turnos ao iniciar o jogo
+        updateTurnCounter();
         logMessage(`Bem-vindo ao ${gameData.title}!`);
     }
 
     function updateLocation() {
-        // Verifica se as propriedades existem antes de acessá-las
         const items = currentLocation.items ? currentLocation.items.map(item => item.name).join(', ') : 'Nenhum item disponível';
         const exits = currentLocation.exits ? currentLocation.exits.map(exit => exit.direction).join(', ') : 'Nenhuma saída disponível';
         const npcs = currentLocation.npcs ? currentLocation.npcs.map(npc => npc.name).join(', ') : 'Nenhum NPC presente';
+        const enemies = currentLocation.enemies ? currentLocation.enemies.map(enemy => enemy.name).join(', ') : 'Nenhum inimigo presente';
 
         gameLocation.innerHTML = `
             <h2>${currentLocation.name}</h2>
@@ -43,7 +44,112 @@ document.addEventListener('DOMContentLoaded', () => {
             <p>Itens: ${items}</p>
             <p>Saídas: ${exits}</p>
             <p>NPCs: ${npcs}</p>
+            <p>Inimigos: ${enemies}</p>
         `;
+
+        // Verifica se há inimigos na localização e oferece a opção de fugir ou lutar
+        if (currentLocation.enemies && currentLocation.enemies.length > 0) {
+            logMessage(`Você encontrou um inimigo: ${currentLocation.enemies[0].name}!`);
+        }
+    }
+
+    function startCombat(enemy) {
+        logMessage(`Combate iniciado contra ${enemy.name}!`);
+
+        // Variáveis para armazenar os pontos de vida do jogador e do inimigo
+        let playerHP = gameData.life;
+        let enemyHP = enemy.life || 20; // Define um valor padrão para o HP do inimigo, caso não esteja definido no JSON
+
+        // Função para processar a escolha do jogador (lutar ou fugir)
+        const processCombatChoice = (command) => {
+            if (command === 'lutar') {
+                return true; // Continua o combate
+            } else if (command === 'fugir') {
+                if (previousLocation) {
+                    logMessage("Você fugiu do combate e voltou para a localização anterior!");
+                    currentLocation = previousLocation; // Volta para a localização anterior
+                    updateLocation(); // Atualiza a interface
+                } else {
+                    logMessage("Não há para onde fugir!");
+                }
+                return false; // Termina o combate
+            } else {
+                logMessage("Comando inválido. Escolha 'lutar' ou 'fugir'.");
+                return null; // Repete a pergunta
+            }
+        };
+
+        // Loop de combate
+        while (playerHP > 0 && enemyHP > 0) {
+            // Turno do inimigo
+            const enemyAttack = enemy.attack;
+            const playerDefense = gameData.defense;
+
+            if (enemyAttack > playerDefense) {
+                const damage = enemyAttack - playerDefense;
+                playerHP -= damage;
+                logMessage(`O inimigo atacou e causou ${damage} de dano!`);
+            } else {
+                logMessage("Você defendeu o ataque do inimigo sem sofrer dano.");
+            }
+
+            // Exibe os HP restantes após o turno do inimigo
+            logMessage(`Seu HP: ${playerHP} | HP do inimigo: ${enemyHP}`);
+
+            // Verifica se o jogador foi derrotado
+            if (playerHP <= 0) {
+                logMessage("Você foi derrotado! Fim do jogo.");
+                endGame();
+                return;
+            }
+
+            // Pergunta ao jogador se deseja continuar lutando ou fugir
+            let combatChoice = null;
+            while (combatChoice === null) {
+                const command = prompt("Deseja 'lutar' ou 'fugir'? Digite sua escolha:").trim().toLowerCase();
+                combatChoice = processCombatChoice(command);
+            }
+
+            // Se o jogador escolher fugir, termina o combate
+            if (!combatChoice) {
+                return;
+            }
+
+            // Turno do jogador
+            const playerAttack = gameData.attack;
+            const enemyDefense = enemy.defense;
+
+            if (playerAttack > enemyDefense) {
+                const damage = playerAttack - enemyDefense;
+                enemyHP -= damage;
+                logMessage(`Você atacou e causou ${damage} de dano ao inimigo!`);
+            } else {
+                logMessage("Seu ataque não foi eficaz. O inimigo se defendeu!");
+            }
+
+            // Exibe os HP restantes após o turno do jogador
+            logMessage(`Seu HP: ${playerHP} | HP do inimigo: ${enemyHP}`);
+
+            // Verifica se o inimigo foi derrotado
+            if (enemyHP <= 0) {
+                logMessage(`Você derrotou o inimigo ${enemy.name}!`);
+                currentLocation.enemies = currentLocation.enemies.filter(e => e.id !== enemy.id);
+                updateLocation(); // Atualiza a interface após derrotar o inimigo
+                return;
+            }
+
+            // Pergunta ao jogador se deseja continuar lutando ou fugir
+            combatChoice = null;
+            while (combatChoice === null) {
+                const command = prompt("Deseja 'lutar' ou 'fugir'? Digite sua escolha:").trim().toLowerCase();
+                combatChoice = processCombatChoice(command);
+            }
+
+            // Se o jogador escolher fugir, termina o combate
+            if (!combatChoice) {
+                return;
+            }
+        }
     }
 
     function updateTurnCounter() {
@@ -82,8 +188,17 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'resolver':
                 solvePuzzle(target);
                 break;
+            case 'lutar':
+            case 'fugir':
+                // Verifica se há inimigos na localização atual
+                if (currentLocation.enemies && currentLocation.enemies.length > 0) {
+                    promptCombatOrFlee(currentLocation.enemies[0], action); // Passa o comando diretamente
+                } else {
+                    logMessage("Não há inimigos para lutar ou fugir aqui.");
+                }
+                break;
             default:
-                logMessage('Comando inválido. Tente "mover", "pegar", "usar", "inventario", "falar" ou "resolver".');
+                logMessage('Comando inválido. Tente "mover", "pegar", "usar", "inventario", "falar", "resolver", "lutar" ou "fugir".');
                 return; // Não incrementa o turno se o comando for inválido
         }
 
@@ -105,6 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 const newLocation = gameData.locations.find(loc => loc.id === exit.targetLocationId);
                 if (newLocation) {
+                    previousLocation = currentLocation; // Salva a localização atual como anterior
                     currentLocation = newLocation;
                     updateLocation(); // Atualiza a interface para a nova localização
                     logMessage(`Você se moveu para ${currentLocation.name}.`);
@@ -224,5 +340,5 @@ document.addEventListener('DOMContentLoaded', () => {
             logMessage(`> ${command}`);
             processCommand(command);
         }
-    })
+    });
 });
