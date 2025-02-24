@@ -53,31 +53,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function promptCombatOrFlee(enemy, action) {
+        if (action === 'lutar') {
+            startCombat(enemy);
+        } else if (action === 'fugir') {
+            if (previousLocation) {
+                logMessage("Você fugiu do combate e voltou para a localização anterior!");
+                currentLocation = previousLocation; // Volta para a localização anterior
+                updateLocation(); // Atualiza a interface
+            } else {
+                logMessage("Não há para onde fugir!");
+            }
+        } else {
+            logMessage("Comando inválido. Escolha 'lutar' ou 'fugir'.");
+        }
+    }
+
     function startCombat(enemy) {
         logMessage(`Combate iniciado contra ${enemy.name}!`);
 
         // Variáveis para armazenar os pontos de vida do jogador e do inimigo
         let playerHP = gameData.life;
         let enemyHP = enemy.life || 20; // Define um valor padrão para o HP do inimigo, caso não esteja definido no JSON
-
-        // Função para processar a escolha do jogador (lutar ou fugir)
-        const processCombatChoice = (command) => {
-            if (command === 'lutar') {
-                return true; // Continua o combate
-            } else if (command === 'fugir') {
-                if (previousLocation) {
-                    logMessage("Você fugiu do combate e voltou para a localização anterior!");
-                    currentLocation = previousLocation; // Volta para a localização anterior
-                    updateLocation(); // Atualiza a interface
-                } else {
-                    logMessage("Não há para onde fugir!");
-                }
-                return false; // Termina o combate
-            } else {
-                logMessage("Comando inválido. Escolha 'lutar' ou 'fugir'.");
-                return null; // Repete a pergunta
-            }
-        };
 
         // Loop de combate
         while (playerHP > 0 && enemyHP > 0) {
@@ -100,18 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (playerHP <= 0) {
                 logMessage("Você foi derrotado! Fim do jogo.");
                 endGame();
-                return;
-            }
-
-            // Pergunta ao jogador se deseja continuar lutando ou fugir
-            let combatChoice = null;
-            while (combatChoice === null) {
-                const command = prompt("Deseja 'lutar' ou 'fugir'? Digite sua escolha:").trim().toLowerCase();
-                combatChoice = processCombatChoice(command);
-            }
-
-            // Se o jogador escolher fugir, termina o combate
-            if (!combatChoice) {
                 return;
             }
 
@@ -141,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Pergunta ao jogador se deseja continuar lutando ou fugir
             combatChoice = null;
             while (combatChoice === null) {
-                const command = prompt("Deseja 'lutar' ou 'fugir'? Digite sua escolha:").trim().toLowerCase();
+                const command = logMessage("Deseja 'lutar' ou 'fugir'? Digite sua escolha:").trim().toLowerCase();
                 combatChoice = processCombatChoice(command);
             }
 

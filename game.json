@@ -47,7 +47,7 @@
         "name": "Quarto 2",
         "description": "Um quarto escuro, há um item aqui.",
         "exits":[{"direction": "Corredor", "targetLocationId": "corredor"}],
-        "items": [{ "id": "Chave Inglesa", "name": "Chave", "description": "Pode ser usada como arma.", "can_take": true }],
+        "items": [{ "id": "Chave Inglesa", "name": "ChaveInglesa", "description": "Pode ser usada como arma.", "can_take": true }],
         "enemies": []
       },
       {
