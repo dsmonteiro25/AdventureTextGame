@@ -1,15 +1,13 @@
 body {
-    font-family: 'Creepster', cursive; /* Fonte assustadora */
-    background-color: #1a1a1a; /* Fundo escuro */
-    color: #e0e0e0; /* Texto claro */
+    font-family: 'Creepster', cursive;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
     margin: 0;
-    padding: 0;
+    padding: 20px;
     display: flex;
     justify-content: space-between;
-    padding: 20px;
     background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png');
 }
-
 
 @import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
 
@@ -20,18 +18,18 @@ body {
     padding: 12px 24px;
     font-size: 18px;
     font-family: 'Creepster', cursive;
-    background-color: #ff4444; /* Vermelho assustador */
+    background-color: #ff4444;
     color: white;
-    border: 2px solid #cc0000; /* Borda mais escura */
+    border: 2px solid #cc0000;
     border-radius: 8px;
     cursor: pointer;
-    text-shadow: 0 0 5px #ff0000; /* Efeito de brilho */
+    text-shadow: 0 0 5px #ff0000;
     box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
     transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
 }
 
 #play-music:hover {
-    background-color: #cc0000; /* Vermelho mais escuro */
+    background-color: #cc0000;
     box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
     transform: scale(1.05);
 }
@@ -40,28 +38,22 @@ body {
     transform: scale(0.95);
 }
 
-#play-music:hover {
-    background-color: #cc0000; /* Vermelho mais escuro */
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
-}
-
 #commands-list {
     width: 250px;
-    background-color: rgba(42, 42, 42, 0.8); /* Fundo escuro com opacidade */
+    background-color: rgba(42, 42, 42, 0.8);
     padding: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     border-radius: 8px;
-    margin-left: 20px;
     position: fixed;
     top: 20px;
     right: 20px;
-    border: 1px solid #444; /* Borda sutil */
+    border: 1px solid #444;
 }
 
 #commands-list h3 {
     margin-top: 0;
-    color: #ff4444; /* Vermelho assustador */
-    text-shadow: 0 0 5px #ff0000; /* Efeito de brilho */
+    color: #ff4444;
+    text-shadow: 0 0 5px #ff0000;
 }
 
 #commands-list ul {
@@ -72,20 +64,19 @@ body {
 #commands-list ul li {
     margin-bottom: 10px;
     font-size: 22px;
-    color: #e0e0e0;
 }
 
 #game-container {
     text-align: center;
     margin: 0 auto;
     max-width: 800px;
-    background-color: rgba(42, 42, 42, 0.8); /* Fundo escuro com opacidade */
+    background-color: rgba(42, 42, 42, 0.8);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     padding: 20px;
     border-radius: 8px;
-    border: 1px solid #444; /* Borda sutil */
+    border: 1px solid #444;
     position: relative;
-    z-index: 1; /* Garante que o conteúdo fique acima do vídeo */
+    z-index: 1;
 }
 
 #background-video {
@@ -95,34 +86,42 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: -1; /* Mantém o vídeo no fundo */
-    opacity: 0.6; /* Controle de opacidade do vídeo */
+    z-index: -1;
+    opacity: 0.6;
 }
 
 #game-title {
-    text-align: center;
-    color: #ff4444; /* Vermelho assustador */
-    text-shadow: 0 0 5px #ff0000; /* Efeito de brilho */
+    color: #ff4444;
+    text-shadow: 0 0 5px #ff0000;
     font-size: 36px;
     margin-bottom: 20px;
 }
 
-#game-description, #game-location {
+#game-author {
+    color: #ff4444;
+    text-shadow: 0 0 5px #ff0000;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#game-description {
     margin-bottom: 26px;
-    color: #e0e0e0;
     font-size: 22px;
     font-weight: bold;
-    background-color: rgba(26, 26, 26, 0.4); /* Opacidade apenas no fundo */
-    padding: 10px; /* Para melhor visualização */
+    background-color: rgba(26, 26, 26, 0.4);
+    padding: 10px;
 }
 
+#game-location {
+    margin-bottom: 26px;
+    font-size: 22px;
+    background-color: rgba(26, 26, 26, 0.4);
+    padding: 10px;
+}
 
 #game-location h2 {
-    color: #ff4444; /* Vermelho assustador */
-    text-shadow: 0 0 5px #ff0000; /* Efeito de brilho */
-}
-#game-location p {
-    font-size: 22px;
+    color: #ff4444;
+    text-shadow: 0 0 5px #ff0000;
 }
 
 #game-actions {
@@ -133,9 +132,9 @@ body {
     width: calc(100% - 100px);
     padding: 10px;
     font-size: 16px;
-    background-color: #444; /* Fundo escuro */
-    color: #e0e0e0; /* Texto claro */
-    border: 1px solid #666; /* Borda sutil */
+    background-color: #444;
+    color: #e0e0e0;
+    border: 1px solid #666;
     border-radius: 4px;
 }
 
@@ -143,7 +142,7 @@ body {
     width: 80px;
     padding: 10px;
     font-size: 16px;
-    background-color: #ff4444; /* Vermelho assustador */
+    background-color: #ff4444;
     color: #fff;
     border: none;
     cursor: pointer;
@@ -152,41 +151,37 @@ body {
 }
 
 #submit-command:hover {
-    background-color: #cc0000; /* Vermelho mais escuro ao passar o mouse */
+    background-color: #cc0000;
 }
 
 #game-log {
-    background-color: rgba(26, 26, 26, 0.8); /* Fundo escuro com opacidade */
+    background-color: rgba(26, 26, 26, 0.8);
     padding: 10px;
-    border: 1px solid #444; /* Borda sutil */
+    border: 1px solid #444;
     height: 200px;
     overflow-y: auto;
     border-radius: 4px;
-    color: #e0e0e0;
-    font-family: 'Courier New', Courier, monospace; /* Fonte de máquina de escrever */
+    font-family: 'Courier New', Courier, monospace;
 }
 
-/* Efeito de texto digitado no log */
 @keyframes typing {
     from { width: 0; }
     to { width: 100%; }
 }
 
 #game-log p {
-    margin: 0;
     padding: 5px 0;
-    border-bottom: 1px solid #444; /* Linha divisória sutil */
-    animation: typing 0.5s steps(40, end); /* Efeito de digitação */
+    border-bottom: 1px solid #444;
+    animation: typing 0.5s steps(40, end);
 }
 
 #turn-counter {
     margin-top: 20px;
     font-size: 18px;
-    color: #ff4444; /* Vermelho assustador */
-    text-shadow: 0 0 5px #ff0000; /* Efeito de brilho */
-    text-align: center;
+    color: #ff4444;
+    text-shadow: 0 0 5px #ff0000;
     padding: 10px;
-    background-color: #2a2a2a; /* Fundo escuro */
-    border: 1px solid #444; /* Borda sutil */
+    background-color: #2a2a2a;
+    border: 1px solid #444;
     border-radius: 4px;
 }
