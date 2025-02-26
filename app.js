@@ -15,9 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let inventory = [];
     let turns = 0;
     let playerHP = null;
-    let inConversation = false; // Estado para controlar diálogo ativo
-    let currentNPC = null; // NPC atual em conversa
-    let currentDialogue = null; // Diálogo atual exibido
+    let inConversation = false;
+    let currentNPC = null;
+    let currentDialogue = null;
 
     fetch('game.json')
         .then(response => response.json())
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             combatChoice = null;
             while (combatChoice === null) {
-                const command = prompt("Deseja 'lutar' ou 'fugir'?").trim().toLowerCase();
+                const command = logMessage("Deseja 'lutar' ou 'fugir'?").trim().toLowerCase();
                 combatChoice = command === 'lutar' || command === 'fugir' ? command : null;
             }
 
@@ -162,13 +162,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (npc.dialogues && npc.dialogues.length > 0) {
                 inConversation = true;
                 currentNPC = npc;
-                currentDialogue = npc.dialogues[0]; // Usa o primeiro diálogo por simplicidade
+                currentDialogue = npc.dialogues[0];
                 logMessage(`${npc.name}: "${currentDialogue.text}"`);
                 if (currentDialogue.responses && currentDialogue.responses.length > 0) {
                     const options = currentDialogue.responses.map((r, i) => `${i + 1}. ${r.text}`).join(' | ');
                     logMessage(`Escolha uma resposta: ${options}`);
                 } else {
-                    inConversation = false; // Termina a conversa se não houver respostas
+                    inConversation = false;
                 }
             } else {
                 logMessage(`Você conversou com ${npc.name}: "${npc.description}"`);
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             logMessage("Resposta inválida.");
         }
-        inConversation = false; // Termina a conversa após a resposta
+        inConversation = false;
         currentNPC = null;
         currentDialogue = null;
     }
@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function processCommand(command) {
         if (inConversation) {
-            const responseIndex = parseInt(command) - 1; // Converte a entrada para índice (1-based para 0-based)
+            const responseIndex = parseInt(command) - 1;
             handleDialogueResponse(responseIndex);
             return;
         }
@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 pickUpItem(target);
                 break;
             case 'usar':
-                useItem(target);
+                interactWithPuzzle('usar', target);
                 break;
             case 'inventario':
                 showInventory();
@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 talkToNPC(target);
                 break;
             case 'resolver':
-                solvePuzzle(target);
+                interactWithPuzzle('resolver', target);
                 break;
             case 'lutar':
             case 'fugir':
@@ -304,27 +304,50 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function useItem(itemName) {
-        const item = inventory.find(i => i.name.toLowerCase() === itemName.toLowerCase());
-        if (item) {
-            const puzzle = currentLocation.puzzles ? currentLocation.puzzles.find(p => p.solution.requiredItems.includes(item.id)) : null;
-            if (puzzle) {
-                logMessage(`Você usou o item: ${item.name}.`);
-                puzzle.result.active.forEach(exitId => {
-                    const exit = currentLocation.exits.find(e => e.targetLocationId === exitId);
-                    if (exit) exit.inactive = false;
-                });
-                if (puzzle.result.lose_item) {
-                    inventory = inventory.filter(i => i.id !== item.id);
-                }
-                updateLocation();
-                logMessage(`Quebra-cabeça resolvido! Saídas desbloqueadas.`);
-            } else {
-                logMessage(`Você não pode usar o item ${item.name} aqui.`);
+    function interactWithPuzzle(action, target) {
+        if (action === "usar") {
+            const item = inventory.find(i => i.name.toLowerCase() === target.toLowerCase());
+            if (!item) {
+                logMessage(`Item "${target}" não encontrado no inventário.`);
+                return;
             }
-        } else {
-            logMessage(`Item "${itemName}" não encontrado no inventário.`);
+            const puzzle = currentLocation.puzzles ? currentLocation.puzzles.find(p => p.solution.requiredItems.includes(item.id)) : null;
+            if (!puzzle) {
+                logMessage(`Você não pode usar o item ${item.name} aqui.`);
+                return;
+            }
+            logMessage(`Você usou o item: ${item.name}.`);
+            resolvePuzzle(puzzle, [item.id]);
+        } else if (action === "resolver") {
+            const puzzle = currentLocation.puzzles ? currentLocation.puzzles.find(p => p.id === target) : null;
+            if (!puzzle) {
+                logMessage(`Quebra-cabeça "${target}" não encontrado.`);
+                return;
+            }
+            const hasRequiredItems = puzzle.solution.requiredItems.every(itemId =>
+                inventory.some(item => item.id === itemId)
+            );
+            if (!hasRequiredItems) {
+                logMessage(`Você não tem os itens necessários para resolver o quebra-cabeça.`);
+                return;
+            }
+            logMessage(`Você resolveu o quebra-cabeça: ${puzzle.description}.`);
+            resolvePuzzle(puzzle, puzzle.solution.requiredItems);
         }
+    }
+
+    function resolvePuzzle(puzzle, usedItemIds) {
+        puzzle.result.active.forEach(exitId => {
+            const exit = currentLocation.exits.find(e => e.targetLocationId === exitId);
+            if (exit) exit.inactive = false;
+        });
+        if (puzzle.result.lose_item) {
+            usedItemIds.forEach(itemId => {
+                inventory = inventory.filter(item => item.id !== itemId);
+            });
+        }
+        updateLocation();
+        logMessage(`Quebra-cabeça resolvido! Saídas desbloqueadas.`);
     }
 
     function showInventory() {
@@ -332,32 +355,6 @@ document.addEventListener('DOMContentLoaded', () => {
             logMessage(`Inventário: ${inventory.map(item => item.name).join(', ')}`);
         } else {
             logMessage('Seu inventário está vazio.');
-        }
-    }
-
-    function solvePuzzle(puzzleId) {
-        const puzzle = currentLocation.puzzles ? currentLocation.puzzles.find(p => p.id === puzzleId) : null;
-        if (puzzle) {
-            const hasRequiredItems = puzzle.solution.requiredItems.every(itemId =>
-                inventory.some(item => item.id === itemId)
-            );
-            if (hasRequiredItems) {
-                logMessage(`Você resolveu o quebra-cabeça: ${puzzle.description}.`);
-                puzzle.result.active.forEach(exitId => {
-                    const exit = currentLocation.exits.find(e => e.targetLocationId === exitId);
-                    if (exit) exit.inactive = false;
-                });
-                if (puzzle.result.lose_item) {
-                    puzzle.result.lose_item.forEach(itemId => {
-                        inventory = inventory.filter(item => item.id !== itemId);
-                    });
-                }
-                updateLocation();
-            } else {
-                logMessage(`Você não tem os itens necessários para resolver o quebra-cabeça.`);
-            }
-        } else {
-            logMessage(`Quebra-cabeça "${puzzleId}" não encontrado.`);
         }
     }
 
