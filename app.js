@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentNPC = null;
     let currentDialogue = null;
 
+    // Carrega o arquivo JSON e inicializa o jogo
     fetch('game.json')
         .then(response => response.json())
         .then(data => {
@@ -44,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const npcs = currentLocation.npcs ? currentLocation.npcs.map(npc => npc.name).join(', ') : 'Nenhum NPC presente';
         const enemies = currentLocation.enemies ? currentLocation.enemies.map(enemy => enemy.name).join(', ') : 'Nenhum inimigo presente';
 
+        // Atualiza a interface com informações da localização atual
         gameLocation.innerHTML = `
             <h2>${currentLocation.name}</h2>
             <p>${currentLocation.description}</p>
@@ -54,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p>Sua vida: ${playerHP}</p>
         `;
         
+        // Alerta sobre inimigos presentes
         if (currentLocation.enemies && currentLocation.enemies.length > 0) {
             logMessage(`Você encontrou um inimigo: ${currentLocation.enemies[0].name}!`);
         }
@@ -88,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
         logMessage(`Combate iniciado contra ${enemy.name}!`);
         let enemyHP = enemy.life || 20;
 
+        // Loop de combate até alguém morrer ou o jogador fugir
         while (playerHP > 0 && enemyHP > 0) {
             const enemyAttack = enemy.attack;
             const playerDefense = gameData.defense;
@@ -207,6 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Exibe mensagens no log do jogo
     function logMessage(message) {
         const logEntry = document.createElement('p');
         logEntry.textContent = message;
@@ -214,6 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gameLog.scrollTop = gameLog.scrollHeight;
     }
 
+    // Processa comandos do jogador
     function processCommand(command) {
         if (inConversation) {
             const responseIndex = parseInt(command) - 1;
@@ -261,6 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
         turns++;
         updateTurnCounter();
 
+        // Verifica se o limite de turnos foi atingido
         if (gameData.max_turns_normal && turns >= gameData.max_turns_normal) {
             logMessage("Você demorou demais e não conseguiu escapar. Fim do jogo!");
             endGame();
@@ -336,6 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Desbloqueia saídas e remove itens usados do inventário
     function resolvePuzzle(puzzle, usedItemIds) {
         puzzle.result.active.forEach(exitId => {
             const exit = currentLocation.exits.find(e => e.targetLocationId === exitId);
@@ -358,12 +366,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Encerra o jogo desativando a interação
     function endGame() {
         commandInput.disabled = true;
         submitCommand.disabled = true;
         logMessage("Fim do jogo. Recarregue a página para jogar novamente.");
     }
 
+    // Evento para botão de envio de comando
     submitCommand.addEventListener('click', () => {
         const command = commandInput.value.trim().toLowerCase();
         commandInput.value = '';
@@ -373,6 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
         processCommand(command);
     });
 
+    // Evento para tecla Enter no campo de comando
     commandInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             const command = commandInput.value.trim().toLowerCase();

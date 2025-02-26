@@ -1,196 +1,184 @@
 {
-  "title": "DiddyPartyScape",
-  "description": "Escape da Freak Off cheia de perigos e mistérios para ficar com sua dignidade intacta.",
-  "author": "Daniel Monteiro e Evanildo Felipe",
-  "startLocationId": "diddy_room",
-  "max_turns_normal": 50,
-  "attack": 10,
-  "defense": 8,
-  "life": 22,
+  "title": "Labirinto do Guardião Eterno",
+  "description": "Você desperta em um labirinto místico e precisa encontrar a saída antes que o Guardião Eterno reclame sua alma.",
+  "author": "Explorador Anônimo",
+  "startLocationId": "sala_inicial",
+  "max_turns_normal": 40,
+  "attack": 8,
+  "defense": 6,
+  "life": 20,
   "locations": [
     {
-      "id": "diddy_room",
-      "name": "Quarto de Diddy",
-      "description": "Você está trancado no quarto e precisa encontrar uma ferramenta para sair.",
-      "items": [{ "id": "chave", "name": "ChaveOrdinaria", "description": "Abre a porta do quarto.", "can_take": true }],
-      "exits": [{ "direction": "corredor", "targetLocationId": "corredor", "inactive": true }],
-      "npcs": [{
-        "id": "fantasma",
-        "name": "Fantasma",
-        "description": "Um espírito perdido que murmura enigmas.",
-        "dialogues": [{
-          "text": "Eu vi o que aconteceu aqui... Quer saber o segredo da chave?",
-          "responses": [
-            { "text": "Sim, me conte!", "result": { "text": "A chave está escondida sob o tapete." } },
-            { "text": "Não, prefiro descobrir sozinho.", "result": { "text": "Muito bem, boa sorte então..." } }
-          ]
-        }]
-      }],
-      "puzzles": [{
-        "id": "cadeado",
-        "description": "A porta está trancada com um cadeado. Talvez uma chave possa ajudar.",
-        "solution": { "requiredItems": ["chave"], "actions": "usar chave" },
-        "result": { "active": ["corredor"], "lose_item": ["chave"] }
-      }]
-    },
-    {
-      "id": "corredor",
-      "name": "Corredor",
-      "description": "Há três quartos e uma escada aqui. Para onde deseja ir?",
-      "exits": [
-        { "direction": "quarto 1", "targetLocationId": "quarto_1" },
-        { "direction": "quarto 2", "targetLocationId": "quarto_2" },
-        { "direction": "quarto 3", "targetLocationId": "quarto_3" },
-        { "direction": "escada", "targetLocationId": "salao_festas" }
-      ],
-      "npcs": [{
-        "id": "mordomo",
-        "name": "Mordomo Misterioso",
-        "description": "Parece saber mais do que aparenta...",
-        "dialogues": [{
-          "text": "Bem-vindo ao corredor. Cuidado com os quartos, nem todos são seguros.",
-          "responses": [
-            { "text": "O que há nos quartos?", "result": { "text": "Um tem luz, outro tem força, e o terceiro... perigo." } },
-            { "text": "Como saio daqui?", "result": { "text": "A escada leva ao salão, mas há mais por aí." } }
-          ]
-        }]
-      }]
-    },
-    {
-      "id": "quarto_1",
-      "name": "Quarto 1",
-      "description": "Um quarto escuro, há um item aqui.",
-      "exits": [{"direction": "Corredor", "targetLocationId": "corredor"}],
-      "items": [{ "id": "lanterna", "name": "Lanterna", "description": "Ilumina lugares escuros.", "can_take": true }],
-      "enemies": []
-    },
-    {
-      "id": "quarto_2",
-      "name": "Quarto 2",
-      "description": "Um quarto escuro, há um item aqui.",
-      "exits": [{"direction": "Corredor", "targetLocationId": "corredor"}],
-      "items": [{ "id": "Chave Inglesa", "name": "ChaveInglesa", "description": "Pode ser usada como arma.", "can_take": true }],
-      "enemies": []
-    },
-    {
-      "id": "quarto_3",
-      "name": "Quarto 3",
-      "exits": [{"direction": "Corredor", "targetLocationId": "corredor"}],
-      "description": "Esse quarto parece especial, mas há um homem bem grande e que parece zangado à frente.",
-      "items": [{ "id": "Chave dos fundos", "name": "Chave", "description": "Abre o portão dos fundos.", "can_take": false }],
-      "enemies": [{ "attack": 10, "defense": 14, "result": { "lose_life": 5 } }]
-    },
-    {
-      "id": "banheiro",
-      "name": "Banheiro",
-      "description": "Você fica preso com um inimigo! Precisa derrotá-lo para sair.",
-      "enemies": [{ "attack": 5, "defense": 4, "result": { "lose_life": 5 } }],
-      "exits": [{ "direction": "sair", "targetLocationId": "corredor", "inactive": false }]
-    },
-    {
-      "id": "salao_festas",
-      "name": "Salão de Festas",
-      "description": "O salão está cheio de NPCs e seguranças inimigos.",
-      "npcs": [
+      "id": "sala_inicial",
+      "name": "Sala Inicial",
+      "description": "Você acorda em uma câmara de pedra fria, com runas brilhando nas paredes. Há uma saída trancada.",
+      "items": [
         {
-          "id": "dj",
-          "name": "DJ",
-          "description": "Talvez ele possa te ajudar...",
-          "dialogues": [{
-            "text": "Ei, você parece perdido. Quer uma dica para sair?",
-            "responses": [
-              { "text": "Sim, por favor!", "result": { "text": "Evite a entrada principal, os guardas são duros." } },
-              { "text": "Não, eu me viro.", "result": { "text": "Ok, mas não diga que não avisei!" } }
-            ]
-          }]
-        },
-        {
-          "id": "festeiro",
-          "name": "Festeiro Misterioso",
-          "description": "Alguém que parece saber segredos do lugar.",
-          "dialogues": [{
-            "text": "Esta festa não é o que parece... Quer saber um segredo?",
-            "responses": [
-              { "text": "Sim, qual é?", "result": { "text": "Há uma saída pelos jardins, mas cuidado com os cães." } },
-              { "text": "Não, estou bem.", "result": { "text": "Sua escolha, estranho..." } }
-            ]
-          }]
+          "id": "pedra_runa",
+          "name": "Pedra de Runa",
+          "description": "Uma pedra com um símbolo estranho que emite um leve brilho.",
+          "can_take": true
         }
       ],
-      "enemies": [],
       "exits": [
-        { "direction": "jardins", "targetLocationId": "jardins" },
-        { "direction": "cozinha", "targetLocationId": "cozinha" },
-        { "direction": "entrada", "targetLocationId": "entrada_principal" },
-        { "direction": "Corredor", "targetLocationId": "corredor" }
+        {
+          "direction": "norte",
+          "targetLocationId": "corredor_principal",
+          "inactive": true
+        }
+      ],
+      "npcs": [
+        {
+          "id": "espirito_guia",
+          "name": "Espírito Guia",
+          "description": "Uma figura translúcida que flutua no canto da sala.",
+          "dialogues": [
+            {
+              "text": "Bem-vindo, mortal. Quer saber como escapar?",
+              "responses": [
+                {
+                  "text": "Sim, me ajude!",
+                  "result": { "text": "Use a pedra de runa na porta para desbloqueá-la." }
+                },
+                {
+                  "text": "Não, eu descubro sozinho.",
+                  "result": { "text": "Que a sorte esteja com você, então." }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "puzzles": [
+        {
+          "id": "porta_runa",
+          "description": "A porta ao norte tem uma ranhura que parece combinar com uma pedra especial.",
+          "solution": { "requiredItems": ["pedra_runa"], "actions": "usar pedra" },
+          "result": { "active": ["corredor_principal"], "lose_item": ["pedra_runa"] }
+        }
       ]
     },
     {
-      "id": "cozinha",
-      "name": "Cozinha",
-      "description": "Você pode coletar consumíveis aqui.",
+      "id": "corredor_principal",
+      "name": "Corredor Principal",
+      "description": "Um longo corredor com ecos distantes. Há várias direções para explorar.",
       "exits": [
-        {"direction": "Salão de Festas", "targetLocationId": "salao_festas", "inactive": false},
-        {"direction": "jardins", "targetLocationId": "jardins", "inactive": false}
+        { "direction": "sul", "targetLocationId": "sala_inicial" },
+        { "direction": "leste", "targetLocationId": "sala_dos_ossos" },
+        { "direction": "oeste", "targetLocationId": "sala_das_sombras" },
+        { "direction": "norte", "targetLocationId": "camara_central" }
       ],
-      "items": [{ "id": "pocao", "name": "Poção", "description": "Recupera vida.", "can_take": true }],
-      "enemies": []
-    },
-    {
-      "id": "entrada_principal",
-      "name": "Entrada Principal",
-      "description": "Três guardas estão protegendo a saída, um deles é o chefe da segurança!",
-      "enemies": [{ "attack": 12, "defense": 10, "result": { "lose_life": 10 } }],
-      "exits": [
-        { "direction": "sair", "targetLocationId": "vitoria", "inactive": false },
-        {"direction": "Salão de Festas", "targetLocationId": "salao_festas", "inactive": true}
+      "npcs": [
+        {
+          "id": "viajante_perdido",
+          "name": "Viajante Perdido",
+          "description": "Um espírito preso que parece exausto.",
+          "dialogues": [
+            {
+              "text": "Este lugar é amaldiçoado. Você sabe para onde ir?",
+              "responses": [
+                {
+                  "text": "Alguma dica?",
+                  "result": { "text": "A sala dos ossos tem algo útil, mas cuidado com os restos." }
+                },
+                {
+                  "text": "Não, estou explorando.",
+                  "result": { "text": "Tome cuidado, nem tudo aqui é o que parece." }
+                }
+              ]
+            }
+          ]
+        }
       ]
     },
     {
-      "id": "jardins",
-      "name": "Jardins",
-      "description": "Um lugar muito bonito, mas que parece esconder alguns perigos",
-      "enemies": [{ "attack": 6, "defense": 2, "result": { "lose_life": 7 } }],
+      "id": "sala_dos_ossos",
+      "name": "Sala dos Ossos",
+      "description": "Uma sala cheia de esqueletos espalhados. Algo brilha entre os ossos.",
+      "items": [
+        {
+          "id": "adaga_antiga",
+          "name": "Adaga Antiga",
+          "description": "Uma lâmina enferrujada, mas ainda afiada.",
+          "can_take": true
+        }
+      ],
       "exits": [
-        { "direction": "Cozinha", "targetLocationId": "cozinha", "inactive": true },
-        {"direction": "Salão de Festas", "targetLocationId": "salao_festas", "inactive": true}
+        { "direction": "oeste", "targetLocationId": "corredor_principal" }
+      ],
+      "enemies": [
+        {
+          "name": "Esqueleto Animado",
+          "attack": 7,
+          "defense": 4,
+          "life": 10,
+          "result": { "lose_life": 3 }
+        }
       ]
     },
     {
-      "id": "saida_dos_fundos",
-      "name": "Saída dos fundos",
-      "description": "Uma entrada para aqueles que desejam ser mais discretos",
-      "enemies": [{ "attack": 6, "defense": 2, "result": { "lose_life": 7 } }],
-      "exits": [
-        { "direction": "jardins", "targetLocationId": "jardins", "inactive": true }
+      "id": "sala_das_sombras",
+      "name": "Sala das Sombras",
+      "description": "A luz mal penetra aqui, mas há um baú no canto.",
+      "items": [
+        {
+          "id": "tocha",
+          "name": "Tocha",
+          "description": "Pode iluminar áreas escuras ou afastar sombras.",
+          "can_take": true
+        }
       ],
-      "puzzles": [{
-        "id": "cadeado",
-        "description": "A porta está trancada com um cadeado. Talvez uma chave possa ajudar.",
-        "solution": { "requiredItems": ["chave"], "actions": "usar chave" },
-        "result": { "active": ["corredor"], "lose_item": ["chave"] }
-      }]
+      "exits": [
+        { "direction": "leste", "targetLocationId": "corredor_principal" }
+      ],
+      "enemies": [
+        {
+          "name": "Sombra Rastejante",
+          "attack": 5,
+          "defense": 3,
+          "life": 8,
+          "result": { "lose_life": 4 }
+        }
+      ]
     },
     {
-      "id": "casa_da_piscina",
-      "name": "Casa da Piscina",
-      "description": "Um lugar muito bonito, mas que parece esconder alguns perigos",
-      "enemies": [],
+      "id": "camara_central",
+      "name": "Câmara Central",
+      "description": "Uma câmara imensa com um altar no centro. A saída final está ao norte, mas está selada.",
       "exits": [
-        { "direction": "cozinha", "targetLocationId": "cozinha", "inactive": true },
-        { "direction": "jardins", "targetLocationId": "jardins", "inactive": true }
+        { "direction": "sul", "targetLocationId": "corredor_principal" },
+        { "direction": "norte", "targetLocationId": "saida_final", "inactive": true }
       ],
-      "puzzles": [{
-        "id": "esvaziar_piscina",
-        "description": "Há um dreno no fundo da piscina. Talvez algo possa ativá-lo.",
-        "solution": { "requiredItems": ["alavanca"], "actions": "puxar alavanca" },
-        "result": { "active": [], "lose_item": ["alavanca"], "new_items": [{ "id": "chave_reserva", "name": "Chave Reserva", "description": "Uma chave extra que pode ser útil.", "can_take": true }] }
-      }]
+      "items": [
+        {
+          "id": "cristal_mistico",
+          "name": "Cristal Místico",
+          "description": "Um cristal que pulsa com energia mágica.",
+          "can_take": true
+        }
+      ],
+      "puzzles": [
+        {
+          "id": "selo_altar",
+          "description": "O altar tem um encaixe para um cristal. Talvez isso abra a saída.",
+          "solution": { "requiredItems": ["cristal_mistico"], "actions": "usar cristal" },
+          "result": { "active": ["saida_final"], "lose_item": ["cristal_mistico"] }
+        }
+      ],
+      "enemies": [
+        {
+          "name": "Guardião Eterno",
+          "attack": 12,
+          "defense": 10,
+          "life": 25,
+          "result": { "lose_life": 8 }
+        }
+      ]
     },
     {
-      "id": "vitoria",
-      "name": "Vitória!",
-      "description": "Você conseguiu escapar da mansão do Diddy"
+      "id": "saida_final",
+      "name": "Saída Final",
+      "description": "Você encontrou a saída! A luz do sol brilha ao longe. Você escapou do labirinto!"
     }
   ]
 }

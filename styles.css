@@ -11,33 +11,6 @@ body {
 
 @import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
 
-#play-music {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    padding: 12px 24px;
-    font-size: 18px;
-    font-family: 'Creepster', cursive;
-    background-color: #ff4444;
-    color: white;
-    border: 2px solid #cc0000;
-    border-radius: 8px;
-    cursor: pointer;
-    text-shadow: 0 0 5px #ff0000;
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
-}
-
-#play-music:hover {
-    background-color: #cc0000;
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
-    transform: scale(1.05);
-}
-
-#play-music:active {
-    transform: scale(0.95);
-}
-
 #commands-list {
     width: 250px;
     background-color: rgba(42, 42, 42, 0.8);
@@ -77,17 +50,6 @@ body {
     border: 1px solid #444;
     position: relative;
     z-index: 1;
-}
-
-#background-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -1;
-    opacity: 0.6;
 }
 
 #game-title {

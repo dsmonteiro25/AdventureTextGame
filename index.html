@@ -1,27 +1,13 @@
+<!--Developed by Daniel Monteiro and Evanildo Felipe-->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DiddyPartyScape</title>
+    <title>AdventureText</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <audio id="background-music" autoplay loop muted>
-        <source src="Puff Daddy - I_ll Be Missing You (Lyrics) feat. Faith Evans_ 112(MP3_160K).mp3" type="audio/mp3">
-        Seu navegador não suporta a tag de áudio.
-    </audio>
-
-    <button id="play-music" onclick="ativarSom()">🔊 Ativar Som</button>
-
-    <script>
-        function ativarSom() {
-            let music = document.getElementById("background-music");
-            music.muted = false;
-            music.play();
-        }
-    </script>
-    
     <div id="commands-list">
         <h3>Comandos Aceitos</h3>
         <ul>
@@ -36,10 +22,6 @@
         </ul>
     </div>
     <div id="game-container">
-        <video id="background-video" autoplay loop muted>
-            <source src="P Diddy edit __ Serial.ae(720P_60FPS).mp4" type="video/mp4">
-            Seu navegador não suporta vídeos HTML5.
-        </video>
         <h1 id="game-title">Carregando Jogo...</h1>
         <h3 id="game-author"></h3> 
         <div id="game-description"></div>
